@@ -6,7 +6,7 @@ import SignUp from './components/SignUp'
 import Login from './components/Login'
 import PrivateComponent from './components/PrivateComponent'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
-
+import AddProduct from './components/AddProduct'
 function App() { 
   return (
     <div className="App"> 
@@ -16,7 +16,7 @@ function App() {
         <Route element={<PrivateComponent />}>
         <Route path="/" element={<h1>Product component</h1>} />
           <Route path="/" element={<h1> product listening component</h1>} />
-          <Route path="/add" element={<h1> Add product</h1>} />
+          <Route path="/add" element={<AddProduct />} />
           <Route path="/update" element={<h1> update listening component</h1>} />
           <Route path="/logout" element={<h1> logout listening component</h1>} />
           <Route path="/profile" element={<h1> profile listening component</h1>} />

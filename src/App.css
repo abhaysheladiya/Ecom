@@ -31,11 +31,9 @@
   border: 1px solid skyblue;
 }
 
-.register{
+.register, .product{
   margin-left: 30%;
 }
-
-.login
 
 .button{
   margin: 25px;
