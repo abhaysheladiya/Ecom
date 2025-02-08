@@ -45,3 +45,15 @@
   border: 1px solid;
   cursor: pointer;
 }
+
+.nav-right{
+  text-align: right;
+}
+
+.logo{
+  width: 45px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 3px;
+  margin-right: 20px;
+}

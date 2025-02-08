@@ -8,20 +8,21 @@ const Nav=()=>{
     }
     return (
         <div>
-            <ul className="nav-ul">
+            <img className='logo' alt="logo" src='https://yt3.googleusercontent.com/ytc/AIdro_lpwLOOTumlQiiMYMHbBgJfQXVyRBGrZdTZ6NbtY-YA8wg=s900-c-k-c0x00ffffff-no-rj'/>
+           {auth ? <ul className="nav-ul">
                 <li><Link to="/"> Home </Link></li>
                 <li><Link to="/add">Add products</Link></li>
                 <li><Link to="/update">Update products</Link></li>
                 <li><Link to="/profile">Profile</Link></li>
-               {/* <li>{ auth ? <Link onClick={logout} to="/signup">Logout</Link> : <Link to="/signup">SignUp</Link>}</li> */}
-               { 
-                    auth ? <li> <Link onClick={logout} to="/signup">Logout</Link></li>
-                    :<>
-                    <li><Link to="/signup">SignUp</Link></li>
-                    <li><Link to="Login">Login</Link></li>
-                    </>
-               }
+                <li> <Link onClick={logout} to="/signup">Logout ({JSON.parse(auth).name}) </Link></li>
+             </ul> 
+             :
+            <ul className='nav-ul nav-right'> 
+                 <li><Link to="/signup">SignUp</Link></li>
+                 <li><Link to="/login">Login</Link></li>
             </ul>
+           }
+           
         </div>
     )
 }
