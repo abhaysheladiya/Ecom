@@ -7,13 +7,23 @@ const ProductList=()=>{
         getProducts();
     },[])
 
+
     //API obtaining data from database
     const getProducts = async()=>{
         let result = await fetch('http://localhost:5000/products');
         result = await result.json();
         setProducts(result);
     }
-    console.warn("products", products);
+  
+    const deleteProduct = async (id)=>{
+        let result = await fetch(`http://localhost:5000/product/${id}`,{
+            method :"Delete"
+        });
+        result = await result.json()
+        if(result){
+            getProducts();
+        }
+    };
 
     return(
         <div className='product-list'>
@@ -23,6 +33,7 @@ const ProductList=()=>{
                 <li>name</li>
                 <li>price</li>
                 <li>category</li>
+                <li>Operation</li>
             </ul>
             {
                 products.map((item, index)=>
@@ -31,7 +42,8 @@ const ProductList=()=>{
                 <li>{item.name}</li>
                 <li>Rs. {item.price}</li>
                 <li>{item.category}</li>
-            </ul>
+                <li><button onClick={()=>deleteProduct(item._id)}>Delete</button></li>
+                </ul>
             )
             }
         </div>
