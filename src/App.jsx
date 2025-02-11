@@ -6,7 +6,7 @@ import SignUp from './components/SignUp'
 import Login from './components/Login'
 import PrivateComponent from './components/PrivateComponent'
 import ProductList from './components/ProductList'
-import updateComponent from './components/UpdateComponent'
+import UpdateComponent from './components/UpdateComponent'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import AddProduct from './components/AddProduct'
 function App() { 
@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<ProductList />} />
           <Route path="/" element={<h1> product listening component</h1>} />
           <Route path="/add" element={<AddProduct />} />
-          <Route path="/update" element={<updateComponent />} />
+          <Route path="/update" element={<UpdateComponent />} />
           <Route path="/logout" element={<h1> logout listening component</h1>} />
           <Route path="/profile" element={<h1> profile listening component</h1>} />
           </Route>
