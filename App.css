@@ -31,7 +31,7 @@
   border: 1px solid skyblue;
 }
 
-.register{
+.register, .product{
   margin-left: 30%;
 }
 
@@ -42,4 +42,46 @@
   background-color: skyblue;
   border: 1px solid;
   cursor: pointer;
+}
+
+.nav-right{
+  text-align: right;
+}
+
+.logo{
+  width: 45px;
+  float: left;
+  border-radius: 50%;
+  margin-top: 3px;
+  margin-right: 20px;
+}
+
+.invalid-input{
+  color: red;
+  margin-top: -20px;
+  display: block;
+  margin-left: 20px;
+}
+
+.product-list{
+  text-align: center;
+  margin-top: 50%;
+}
+
+.product-list ul li{
+  display: block;
+  border: 1px solid skyblue;
+  padding :5px;
+  width: 150px;
+}
+.product-list ul{
+  margin: 0;
+}
+
+.search-product-box{
+  width: 400px;
+  margin: 20px;
+  height: 40px;
+  border: 1px solid skyblue;
+  padding-left: 20px;
 }
