@@ -3,6 +3,10 @@ const cors = require("cors");
 require("./db/config");
 const User = require("./db/User");
 const Product = require("./db/Product")
+
+const jwt =require('jsonwebtoken');
+const jwtkey='e-comm';
+
 const app = express();
 
 app.use(express.json());
@@ -14,7 +18,13 @@ app.post("/register", async (req, resp) => {
   let result = await user.save();
   result = result.toObject();
   delete result.password      //not show password in url
-  resp.send(result);
+
+  jwt.sign({result}, jwtkey, {expiresIn: "2h" },(err,token)=>{
+    if(err){
+      resp.send({ result: "something went wrong please try after a seconds "});
+    }
+      resp.send({result, auth: token})
+  })
 });
 
 // API for login the user after completing registration
@@ -23,7 +33,12 @@ app.post("/login", async (req, resp) => {
   if (req.body.password && req.body.email) {
     let user = await User.findOne(req.body).select("-password"); //'-password' it means remove/notShow password
     if (user) {
-      resp.send(user);
+      jwt.sign({user},jwtkey,{expiresIn: "2h" },(err,token)=>{
+        if(err){
+          resp.send({ result: "something went wrong please try after a seconds "});
+        }
+          resp.send({user, auth: token})
+      })
     } else {
       resp.send({ result: "No user found" });
     }
