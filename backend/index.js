@@ -9,6 +9,7 @@ const jwtkey='e-comm';
 
 const app = express();
 
+//middleware
 app.use(express.json());
 app.use(cors());
 
@@ -47,14 +48,14 @@ app.post("/login", async (req, resp) => {
 });
 
 //API to add product
-app.post("/add-products",async (req,resp)=>{
+app.post("/add-products",verifyToken, async (req,resp)=>{
   let product = new Product(req.body); //Create a new product using request body data
   let result = await product.save();// Save product to the database
   resp.send(result);// Send back the saved product
 });
 
 //API to fetch Products
-app.get("/products", async(req,resp)=>{
+app.get("/products",verifyToken, async(req,resp)=>{
   let products = await Product.find();
   if(products.length>0){
     resp.send(products);
@@ -64,13 +65,13 @@ app.get("/products", async(req,resp)=>{
 });
 
 //API for deleting the record
-app.delete("/product/:id", async(req,resp)=>{
+app.delete("/product/:id",verifyToken, async(req,resp)=>{
     const result =await Product.deleteOne({_id:req.params.id});
     resp.send(result);
 });
 
 //API for updating or viewing the record
-app.get("/product/:id", async (req,resp)=>{
+app.get("/product/:id",verifyToken, async (req,resp)=>{
   let result = await Product.findOne({_id:req.params.id});
   if(result){
     resp.send(result)
@@ -80,7 +81,7 @@ app.get("/product/:id", async (req,resp)=>{
 });
 
 //API for updating the data
-app.put("/product/:id", async (req,resp)=>{
+app.put("/product/:id", verifyToken, async (req,resp)=>{
   let result = await Product.updateOne(
     {_id: req.params.id},
     {
@@ -91,14 +92,37 @@ app.put("/product/:id", async (req,resp)=>{
 });
 
 //API for searching product
-app.get("/search/:key", async (req,resp)=>{
+app.get("/search/:key", verifyToken, async (req,resp)=>{
   let result =await Product.find({
     "$or":[
-      {name: {$regex: req.params.key}},
-      {company: {$regex: req.params.key}},
+      {
+        name: {$regex: req.params.key}
+      },
+      {company: 
+        {$regex: req.params.key}
+      },
       {category: {$regex: req.params.key}}
     ]
-  })
-})
+  });
+  resp.send(result);
+});
+
+
+function verifyToken(req, resp, next){
+  let token = req.headers['authorization'];
+  if(token){
+    token = token.split(' ')[1];
+    console.warn("middleware called if", token)
+    jwt.verify(token, jwtkey, (err, valid)=>{
+      if(err){
+        resp.status(401).send({ result: "Please provide valid token"})
+      }else{
+        next();
+      }
+    })
+  }else{
+      resp.status(403).send({ result: "Please add token with header"})
+  }
+}
 
 app.listen(5000);
